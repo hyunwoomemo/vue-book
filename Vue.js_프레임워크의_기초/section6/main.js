@@ -5,7 +5,7 @@ let app = new Vue({
   }, // 애플리케이션에서 사용할 데이터
   computed: {
     computedMessage: function () {
-      return this.message + '!'
+      return this.message + '!!'
     }
   }, // 산출 속성
   created: function () {
