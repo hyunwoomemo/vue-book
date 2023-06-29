@@ -132,3 +132,115 @@ data와 methods는 자유롭게 정의할 수 있지만, 라이프 사이클 훅
 - HTML 코딩을 위해 컴포넌트를 사용하면 좋습니다.
 - 필요한 데이터와 메서드는 옵션으로 정의합니다.
 - new Vue() 한 개만 만들고, 컴포넌트로 UI를 구축합니다.
+
+## 데이터 등록과 변경
+
+### section.7 기본적인 데이터 바인딩
+
+DOM 변경을 자동화하는 `데이터 바인딩`을 하려면, 템플릿에서 사용하는 모든 데이터를 `리액티브 데이터`로 정의해야 한다.
+
+리액티브 데이터는 추출했을 때(get), 설정했을 때(set), 훅(hook) 처리가 등록되어 `반응하는 데이터`를 의미
+
+#### 리액티브 데이터 정의하기
+
+```js
+const app = new Vue({
+  el: "#app",
+  data: {
+    message: "Vie.js!", // 이렇게 정의한 message는 변화를 감지할 수 있게 됨
+  },
+});
+```
+
+```js
+let state = { count: 0 };
+const app = new Vue({
+  el: "#app",
+  data: {
+    state: state,
+  },
+});
+
+state.count++; // state.count는 리액티브 데이터
+```
+
+data 옵션 바로 아래의 속성은 이후에 따로 추가할 수 없으므로, 값이 결정되지 않은 경우라도 초기값 또는 빈 데이터를 넣어서 정의해야함.
+
+### section.8 텍스트와 속성 데이터 바인딩
+
+#### 텍스트와 데이터 바인딩
+
+data 속성에 정의한 message 속성 값을 렌더링할 때는 속성 이름을 `이중 중괄호`로 감싸서 템플릿에 입력
+
+```js
+<div id="app">
+  <p>Hello {{ message }}</p>
+</div>
+```
+
+실제 렌더링
+
+```js
+<div id="app">
+  <p>Hello Vue.js!</p>
+</div>
+```
+
+별도의 태그를 사용할 필요 없이 중괄호를 사용하기만 하면, 해당 위치에 텍스트 데이터가 출력
+이는 `Mustache` 라고 부르는 기법
+
+**객체와 배열 내부의 요소 출력하기**
+
+```js
+new Vue({
+  el: "#app",
+  data: {
+    // 객체 데이터
+    message: {
+      value: "Hello Vue.js!",
+    },
+    // 배열 데이터
+    list: ["사과", "바나나", "딸기"],
+    // 다른 데이터를 사용해서 list에서 값을 추출하기 위한 요소
+    num: 1,
+  },
+});
+```
+
+```js
+<p>{{ message.value }}</p>
+<p>{{message.value.length}}</p>
+<p>{{list[2]}}</p>
+<p>{{list[num]}}</p> /* 속성을 조합해서 사용하기 */
+```
+
+**조건 기반 출력할 텍스트 변경**
+
+```js
+{
+  {
+    message.length >= 10 ? "10글자 이상" : "10글자 미만";
+  }
+}
+```
+
+#### 속성 데이터 바인딩하기
+
+Musache는 텍스트 콘텐츠를 위한 기법이므로, 속성으로 사용할 수 없습니다.
+
+```js
+<input type="text" value="{{message}}" />
+/* Error compiling templete */
+```
+
+속성에 바인딩하려면 `v-bind` 디렉티브 사용
+
+```js
+<input type="text" v-bind:value="message">
+```
+
+생략하고 `:` 사용 가능
+
+```js
+<input type="text" :value="message">
+```
