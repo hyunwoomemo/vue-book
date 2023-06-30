@@ -244,3 +244,67 @@ Musache는 텍스트 콘텐츠를 위한 기법이므로, 속성으로 사용할
 ```js
 <input type="text" :value="message">
 ```
+
+v-로 시작하는 디렉티브는 자바스크립트 식
+
+**v-bind 장식자**
+
+|장식자|의미|
+|.prop|속성 대신에 DOM 속성으로 바인딩|
+|.camel|케밥 케이스 속성 이름을 카멜 케이스로 변환|
+|.sync|양방 바인딩|
+
+.prop 장식자는 DOM 속성과 직접 바인딩합니다.
+
+```html
+<!-- DOM의 textContent 속성에 바인딩하기 -->
+<div v-bind:text-content.prop="message">...</div>
+<!-- DOM의 srollTop 속성에 바인딩하기 -->
+<div v-bind:scroll-top.prop="scroll">...</div>
+```
+
+```js
+new Vue({
+  el: "#app",
+  data: {
+    messge: "Hello Vue.js!",
+    scroll: 0,
+  },
+  mounted: function () {
+    this.scroll = 100; // 요소의 스크롤 양 조작하기
+  },
+});
+```
+
+> 데이터의 내용 확인하기
+
+템플릿에 다음과 같이 태그를 작성하면, 현재 데이터 전체의 상태가 어떤지 JSON 형식으로 화면에 출력할 수 있습니다.
+
+```html
+<pre>{{ $data }}</pre>
+```
+
+#### 데이터 변경
+
+data 옵션 바로 아래의 데이터는 예를 들면 message와 count 같은 이름을 가진 `속성`이 되므로, 모두 리액티브 데이터입니다.
+
+#### 클릭으로 카운터의 수 늘리기
+
+```html
+<div id="app">
+  <!-- count 속성 출력하기 -->
+  <p>{{ count }}번 클릭했습니다.</p>
+  <!-- 이 버튼을 클릭하면 increment 메서드가 호출됩니다. -->
+  <button v-on:click="increment">카운트 하기</button>
+</div>
+```
+
+> 메서드 내부에서 데이터 또는 다른 메서드에 접근하기
+
+```js
+this.count += 1;
+```
+
+여기서 this는 new Vue()로 생성된 인스턴스, 따라서 new Vue() 인스턴스의 리턴 값을 나타냄
+
+만약 이때 인스턴스가 컴포넌트라면, this는 컴포넌트 인스턴스 자체를 나타냄

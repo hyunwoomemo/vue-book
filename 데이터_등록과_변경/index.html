@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <!-- 1 -->
+    <p>{{ message.value }}</p>
+    <p>{{message.value.length}}</p>
+    <p>{{list[2]}}</p>
+    <p>{{list[num]}}</p>
+    <!-- 2 -->
+    <!-- DOM의 textContent 속성에 바인딩하기 -->
+    <div v-bind:text-content.prop="message">...</div>
+    <!-- DOM의 srollTop 속성에 바인딩하기 -->
+    <div v-bind:scroll-top.prop="scroll">...</div>
+    <!-- 3 -->
+
+    <!-- count 속성 출력하기 -->
+    <p>{{ count }}번 클릭했습니다.</p>
+    <!-- 이 버튼을 클릭하면 increment 메서드가 호출됩니다. -->
+    <button v-on:click="increment">카운트 하기</button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+  <script src="텍스트와_속성_데이터_바인딩.js"></script>
+</body>
+
+</html>
